@@ -106,7 +106,3 @@ Module TestB
     
   EndProcedure
 EndModule
-; IDE Options = PureBasic 5.42 LTS (Windows - x86)
-; CursorPosition = 27
-; Folding = -----
-; EnableXP

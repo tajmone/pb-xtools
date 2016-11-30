@@ -7,16 +7,20 @@
   <section name="data">
     <explorer view="" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2016-11-29 22:37" user="P.K.Dick" host="PKDICK-HP"/>
+    <lastopen date="2016-11-30 11:36" user="P.K.Dick" host="PKDICK-HP"/>
   </section>
   <section name="files">
     <file name="Entry.pb">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
-      <fingerprint md5="f77636ba387337985be1b5f56b8057cb"/>
+      <fingerprint md5="2f4874873086b9a2ef92b32d7d5bf8b2"/>
+    </file>
+    <file name="PBHGENX_Runner.pb">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
+      <fingerprint md5="16d5803176ff0ce2750f005b94afd297"/>
     </file>
   </section>
   <section name="targets">
-    <target name="Default Target" enabled="1" default="1">
+    <target name="PBHGENX" enabled="1" default="1">
       <inputfile value="Entry.pb"/>
       <outputfile value="build\PBHGENX.exe"/>
       <commandline value="&quot;Test.pb&quot;"/>
@@ -39,6 +43,14 @@
         <field15 value="VOS_NT_WINDOWS32"/>
         <field16 value="VFT_APP"/>
       </versioninfo>
+    </target>
+    <target name="PBHGENX_Runner" enabled="1" default="0">
+      <inputfile value="PBHGENX_Runner.pb"/>
+      <outputfile value="build\PBHGENX_Runner.exe"/>
+      <commandline value="&quot;Test.pb&quot;"/>
+      <executable value="build\PBHGENX_Runner.exe"/>
+      <options/>
+      <icon enable="1">resources\headers.ico</icon>
     </target>
   </section>
 </project>
