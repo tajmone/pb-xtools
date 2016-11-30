@@ -7,7 +7,7 @@
   <section name="data">
     <explorer view="" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2016-11-30 11:36" user="P.K.Dick" host="PKDICK-HP"/>
+    <lastopen date="2016-11-30 17:12" user="P.K.Dick" host="PKDICK-HP"/>
   </section>
   <section name="files">
     <file name="Entry.pb">
@@ -16,7 +16,7 @@
     </file>
     <file name="PBHGENX_Runner.pb">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
-      <fingerprint md5="16d5803176ff0ce2750f005b94afd297"/>
+      <fingerprint md5="6d9fd0f21631303cade183e2c275522a"/>
     </file>
   </section>
   <section name="targets">

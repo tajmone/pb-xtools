@@ -3,14 +3,18 @@
 ; ······························· PBHGENX RUNNER ·······························
 ; ··············································································
 ; ··············································································
-; "PBHGENX_Runner" is a dummy-test runner for PBHGENX: it should set as a tool
-; invoked at source-save time. It will check if "<SourceFilename>.pbhgen.pbi"
-; (or ".sbi" in case of a SpideBASIC source file) exists: If yes, it calls
-; PBHGENX. This prevents PBHGENX from ALWAYS creating a header file.
+; PBHGENX v5.50a (= PBHGEN v5.43)
+; [ 2016-11-30 ]
+; ------------------------------------------------------------------------------
+; "PBHGENX_Runner" is a boilerplate code and test-runner for PBHGENX:
+; It should be set as a tool invoked at source-save time. It will check for the
+; existence of a "<SourceFilename>.pbhgen.pbi" (or ".sbi" for SpideBASIC):
+; If yes, it calls PBHGENX and passes on to it the arguments.
+; This prevents PBHGENX from ALWAYS creating a header file.
 ; The code for this test was separated from the main PBHGENX code (Entry.pb)
-; because PBHGENX is part of the PB-XTOOLS collection of tools, which offers
+; because PBHGENX is part of the PB-XTOOLS collection of tools, which aims to use
 ; a single common code for filtering out various tools invocations (for different
-; triggering events) and decides which tools should be called, and in which order.
+; triggering events) and decide which tools should be called, and in which order.
 ; The actual code that will be calling PBHGENX is to be found in PB-XTOOLS source,
 ; this file is for testing purposes, and for inclusion in the final PB-XTOOLS.
 ; ------------------------------------------------------------------------------
@@ -21,6 +25,7 @@
 ;  -- Creation of an header file will happen only if a header file (named according
 ;     to the above mentioned pattern) is present. This creation "on demand" prevents
 ;     creation of unneeded header files.
+;  -- Some differences in the comments within the generated header file.
 ; ------------------------------------------------------------------------------
 
 ; -----------------------------------------------------------------------------
@@ -57,5 +62,9 @@ EndIf
 ; ------------------------------------------------------------------------------
 CallResult = RunProgram("PBHGENX", SourceFileName$, "")
 If Not CallResult
-  MessageRequester("PBHGENX ERROR", "Couldn't launch PBHGENX!", #PB_MessageRequester_Error)
+  Err$ =  ~"Couldn't launch PBHGENX!\n"+
+          ~"Retry, and if the problem persists check PBHGENX settings.\n"+
+          ~"Or consider disabling this tool until the problem is fixed:\n"+
+          ~"(go to menu: \"Tools\" -> \"Configure Tools…\")"
+  MessageRequester("PBHGENX ERROR", Err$, #PB_MessageRequester_Error)
 EndIf
