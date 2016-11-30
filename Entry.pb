@@ -4,7 +4,8 @@
 ; ··············································································
 ; ··············································································
 ;  -- « PureBasic Header Generator X »
-; A fork of 00laboratories's PBHGEN
+;  -- https://github.com/tajmone/pb-xtools
+; A fork of 00laboratories's PBHGEN v5.43
 ; ----------------------------------------------------------------------- ;
 ;  -- PureBasic Header Generator                                      --  ;
 ;  -- Copyright © 00laboratories 2013-2016                            --  ;
@@ -459,17 +460,18 @@ EndIf
 
 SourceExt.s = GetExtensionPart(Program\SourceFileName$)
 If SourceExt = "pb" Or SourceExt = "pbi"      ; <= Added support for "*.pbi" source files
-  Program\IsSpiderBasic = #False
+  Program\IsSpiderBasic = #False              ; <= Added
+  HeadExt$ = "pbhgen.pbi"
 ElseIf SourceExt = "sb" Or SourceExt = "sbi"  ; <= Added support for "*.sbi" source files
   Program\IsSpiderBasic = #True
+  HeadExt$ = "pbhgen.sbi"                     ; <= Added
 Else
   End
 EndIf
 
 ; CHANGES: HeaderFilename now is "<SourceFilename>.pbhgen.pbi"
-Program\HeaderFileName$ = Left(Program\SourceFileName$, Len(Program\SourceFileName$)-Len(SourceExt)) + "pbhgen.pbi" ; <= Changed!
+Program\HeaderFileName$ = Left(Program\SourceFileName$, Len(Program\SourceFileName$)-Len(SourceExt)) + HeadExt$ ; <= Changed!
 
-; MessageRequester("HEADER FILENAME", Program\HeaderFileName$) ; TODO: remove me!
 ; -----------------------------------------------------------------------------
 Program\SourceFileHandle = ReadFile(#PB_Any, Program\SourceFileName$)
 Program\HeaderFileHandle = CreateFile(#PB_Any, Program\HeaderFileName$)
