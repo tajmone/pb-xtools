@@ -21,7 +21,7 @@ License: [Creative Commons Attribution 4.0 International](https://creativecommon
         -   [PBHGENX Solution](#pbhgenx-solution)
     -   [2. No support for `*.pbi`/`*.sbi` source files](#2-no-support-for-pbisbi-source-files)
         -   [PBHGENX Solution](#pbhgenx-solution-1)
-            -   [Different naming scheme: `filename.pbheader.pbi`](#different-naming-scheme-filenamepbheaderpbi)
+            -   [Different naming scheme: `filename.pbhgen.pbi`](#different-naming-scheme-filenamepbheaderpbi)
             -   [Headers on Demand](#headers-on-demand)
     -   [3. Git hostility](#3-git-hostility)
         -   [PBHGENX Solution](#pbhgenx-solution-2)
@@ -51,19 +51,19 @@ Under “**Tools**” in the PureBasic IDE add a new tool called “`PBHGENX`”
 Usage
 =====
 
-**PBHGENX** will generate header files only if it finds a corresponding header file named `filename.pbheader.pbi` (where `filename` will be your actual sourcefile name). So if you want to start tracking a sourcefile with **PBHGENX**, just create an empty header file for it.
+**PBHGENX** will generate header files only if it finds a corresponding header file named `filename.pbhgen.pbi` (where `filename` will be your actual sourcefile name). So if you want to start tracking a sourcefile with **PBHGENX**, just create an empty header file for it.
 
 Then make sure you include your header-file in the Source by inserting an `IncludeFile` directive. Example:
 
 ``` {.purebasic}
-IncludeFile "filename.pbheader.pbi" ;- PBHGEN
+IncludeFile "filename.pbhgen.pbi" ;- PBHGEN
 ```
 
 To use automatic header generation also in modules use:
 
 ``` {.purebasic}
 Module MyModule
-  IncludeFile "filename.pbheader.pbi"" ;- PBHGEN
+  IncludeFile "filename.pbhgen.pbi"" ;- PBHGEN
 EndModule
 ```
 
@@ -72,15 +72,15 @@ Example
 
 Your sourcefile is called `fibonacci.pb`.
 
-1.  create in the same folder an empty new file called `fibonacci.pbheader.pbi`
+1.  create in the same folder an empty new file called `fibonacci.pbhgen.pbi`
 
 2.  add at the beginning of `fibonacci.pb` source code the following line:
 
     ``` {.purebasic}
-    IncludeFile "fibonacci.pbheader.pbi" ;- PBHGEN
+    IncludeFile "fibonacci.pbhgen.pbi" ;- PBHGEN
     ```
 
-From now on, whenever you save `fibonacci.pb`, the contents of `fibonacci.pbheader.pbi` will be automatically updated (regenerated).
+From now on, whenever you save `fibonacci.pb`, the contents of `fibonacci.pbhgen.pbi` will be automatically updated (regenerated).
 
 Running PBHGENX Along PBHGEN
 ============================
@@ -159,11 +159,11 @@ In addition to this:
 
 ### PBHGENX Solution
 
-PBHGENX solves this by adopting a different extension for the generated header files: `filename.pbheader.pbi`. This extension is specif enough to render extremely unlinkely any conflicts with pre-exisitng header- or include-files.
+PBHGENX solves this by adopting a different extension for the generated header files: `filename.pbhgen.pbi`. This extension is specif enough to render extremely unlinkely any conflicts with pre-exisitng header- or include-files.
 
 Files with this extension are also reckognizable at a glance as PBHGENX auto-generated header files – you won’t be headless about which files are automatically overwritten and which aren’t.
 
-Furthermore, PBHGENX only creates a header-file when it finds a corresponding `filename.pbheader.pbi` – if a header-file doesn’t exist, PBHGENX makes an educated guess and assumes you don’t need his services. Which means … no more unwanted/unused header files to cleanup.
+Furthermore, PBHGENX only creates a header-file when it finds a corresponding `filename.pbhgen.pbi` – if a header-file doesn’t exist, PBHGENX makes an educated guess and assumes you don’t need his services. Which means … no more unwanted/unused header files to cleanup.
 
 2. No support for `*.pbi`/`*.sbi` source files
 ----------------------------------------------
@@ -174,16 +174,16 @@ Due to its header-files naming convention, PBHGEN can’t handle these cases —
 
 ### PBHGENX Solution
 
-#### Different naming scheme: `filename.pbheader.pbi`
+#### Different naming scheme: `filename.pbhgen.pbi`
 
-PBHGENX’s header-file naming scheme (`filename.pbheader.pbi`) accepts `*.pbi`/`*.sbi` source files:
+PBHGENX’s header-file naming scheme (`filename.pbhgen.pbi`) accepts `*.pbi`/`*.sbi` source files:
 
-| LANGUAGE    | SOURCE FILE    | HEADER FILE             |
-|-------------|----------------|-------------------------|
-| PureBASIC   | `filename.pb`  | `filename.pbheader.pbi` |
-| PureBASIC   | `filename.pbi` | `filename.pbheader.pbi` |
-| SpiderBASIC | `filename.sb`  | `filename.pbheader.sbi` |
-| SpiderBASIC | `filename.sbi` | `filename.pbheader.sbi` |
+|   LANGUAGE  |  SOURCE FILE   |      HEADER FILE      |
+|-------------|----------------|-----------------------|
+| PureBASIC   | `filename.pb`  | `filename.pbhgen.pbi` |
+| PureBASIC   | `filename.pbi` | `filename.pbhgen.pbi` |
+| SpiderBASIC | `filename.sb`  | `filename.pbhgen.sbi` |
+| SpiderBASIC | `filename.sbi` | `filename.pbhgen.sbi` |
 
 The only thing which you can’t have is two source files with the same name but different extension: if you create `SomeFile.pb` and `SomeFile.pbi` in the same folder, PBHGENX will keep creating a common `SomeFile.pbhgen.pbi` header file for both of them – overwriting each other at each file save.
 
@@ -191,11 +191,11 @@ This case shouldn’t really be a problem, but in future updates of PBHGENX I sh
 
 #### Headers on Demand
 
-Instead of assuming that you always want/need the creation of a header file, whenever you save your sourcefile PBHGENX will check if a corresponding `filename.pbheader.pbi` (or `filename.pbheader.sbi` for a SB source) exists: if it does, it will create the header-file.
+Instead of assuming that you always want/need the creation of a header file, whenever you save your sourcefile PBHGENX will check if a corresponding `filename.pbhgen.pbi` (or `filename.pbhgen.sbi` for a SB source) exists: if it does, it will create the header-file.
 
 This additional check-phase shifts from PBHGEN’s default ubiquitousness to an «on-demand» approach to header-files generation.
 
-All a user needs to do to place a given source file under PBHGENX’s control is to create an empty file with the same name plus `.pbheader.pbi` extension.
+All a user needs to do to place a given source file under PBHGENX’s control is to create an empty file with the same name plus `.pbhgen.pbi` extension.
 
 3. Git hostility
 ----------------
